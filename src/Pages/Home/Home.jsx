@@ -1,42 +1,43 @@
-import { useGSAP } from '@gsap/react';
+
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/all';
-import  { useRef } from 'react';
-import './home.css'
 
-gsap.registerPlugin(useGSAP, ScrollTrigger);
+import './home.css'
+import { useEffect } from 'react';
+
+gsap.registerPlugin( ScrollTrigger);
 
 const Home = () => {
-    const main = useRef();
+  
+  useEffect(()=>{
+    let ctx = gsap.context(()=>{
+      gsap.set('.photo:not(:first-child)', {opacity: 0, scale:0.5})
+    
+      const animation = gsap.to('.photo:not(:first-child', {opacity: 1, scale: 1, duration: 1, stagger: 1})
 
-    useGSAP(
-      () => {
-        const boxes = gsap.utils.toArray('.box');
-        boxes.forEach((box) => {
-          gsap.to(box, {
-            x: 300,
-           
-            scrollTrigger: {
-              trigger: box,
-             
-              start: ' bottom  bottom',
-              end: 'bottom 80%',
-              scrub: true,
-              markers: true,
-            },
-          });
-        });
-        
-      },
-      { scope: main }
-    );
+      ScrollTrigger.create({
+        trigger: '.galary',
+        start: 'bottom bottom',
+        end: 'top top',
+        pin:'.righBlock',
+        animation: animation,
+        scrub: true,
+        markers: true
+      })
+  
+    })
+   
+
+    return () => ctx.revert;
+  },[])
 
     return (
         <div>
             {/* page 01 */}
-            <div className='bg-no-repeat bg-[url(https://i.ibb.co/6BHhNgX/Vector-1.png)]'>
+            <div className='bg-no-repeat righBlock bg-[url(https://i.ibb.co/6BHhNgX/Vector-1.png)]'>
            
            <div className="flex justify-between">
+
            <div>
 
           {/* haddi */}
@@ -64,21 +65,21 @@ const Home = () => {
            
             </div>
             
-              <div className='grid grid-cols-3' ref={main}>
+              <div className='grid galary grid-cols-3'>
 
-              <img className='w-56 box relative z-10 left-32 top-10' src="https://i.ibb.co/tHPyq9t/unsplash-ZCHj-2l-JP00.jpg" alt="" />
+              <img className='w-56 righBlock box relative z-10 left-32 top-10' src="https://i.ibb.co/tHPyq9t/unsplash-ZCHj-2l-JP00.jpg" alt="" />
 
             {/* center */}
-              <img className='w-64  mt-10 z-10 relative left-16' src="https://i.ibb.co/prsMVKP/unsplash-eoqnr8ikw-FE.jpg" alt="" />
+              <img className='w-64 righBlock mt-10 z-10 relative left-16' src="https://i.ibb.co/prsMVKP/unsplash-eoqnr8ikw-FE.jpg" alt="" />
 
             {/* 3rd */}
               <img className='w-52 relative top-2 left-6' src="  https://i.ibb.co/J780cy6/unsplash-5-PVXkqt2s9k.jpg" alt="" />
 
             
-              <img className='w-56 h-80 relative left-48 bottom-40 z-0' src="https://i.ibb.co/VjtK900/unsplash-Mv9hjn-EUHR4.jpg" alt="" />
+              <img className='w-56 righBlock h-80 relative left-48 bottom-40 z-0' src="https://i.ibb.co/VjtK900/unsplash-Mv9hjn-EUHR4.jpg" alt="" />
 
             {/* last */}
-              <img className='w-60 box  bottom-20 left-56' src="https://i.ibb.co/VqPgGgZ/unsplash-BJaq-Pa-H6-AGQ.jpg" alt="" />
+              <img className='w-60 relative  bottom-20 left-56' src="https://i.ibb.co/VqPgGgZ/unsplash-BJaq-Pa-H6-AGQ.jpg" alt="" />
 
             </div>
 
